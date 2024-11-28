@@ -5,13 +5,11 @@ import * as FileSystem from 'expo-file-system';
 const useRecordsStore = create((set, get) => ({
   items: [],
 
-
   fetchItems: async () => {
     try {
       const uri = FileSystem.documentDirectory 
       const files = await FileSystem.readDirectoryAsync(uri);
-      alert(files);
-
+      
       set({ items: files });
     } catch (error) {
       console.error('Failed to fetch items:', error);

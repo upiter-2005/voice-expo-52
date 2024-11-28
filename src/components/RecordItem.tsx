@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity,Image, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity,Image, StyleSheet, Alert } from 'react-native'
 import React from 'react'
 import recordItem from '@/src/assets/images/User.webp'
 import cancel from '@/src/assets/images/Cencel.webp'
@@ -20,7 +20,7 @@ const { items, fetchItems, updateItem } = useRecordsStore();
     let url = FileSystem.documentDirectory as string
     url += display_name
     const response = await FileSystem.deleteAsync(url)
-    alert(`${display_name} was successful removed`)
+    Alert.alert('Delete Record',`${display_name} was successful removed`)
     updateItem(display_name)
   }
 

@@ -25,7 +25,7 @@ const AiCover = () => {
   const {voices} = useGetVoices()
     
   const generateVoice = async() => {
-    const audio = await getAudio(message, voice)
+    const audio = await getAudio(title, message, voice)
     setResultRecord(audio)
     //const { sound } = await Audio.Sound.createAsync( { uri: audio as string } )
     //await sound.playAsync()

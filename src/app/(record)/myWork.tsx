@@ -1,24 +1,19 @@
-import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet } from 'react-native'
-import React, { useEffect } from 'react'
+import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet, Platform } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import settings from '@/src/assets/images/settings.webp'
 import vip from '@/src/assets/images/vip.webp'
-
-import { useIsFocused } from '@react-navigation/native'
 import { RecordItem } from '@/src/components/RecordItem'
-import { useGetVoices } from '@/src/hooks/useFetchVoices'
-
-
+import useRecordsStore from "@/src/store/useRecordsStore"
 
 const MyWork = () => {
-   //const isFocused = useIsFocused();
-  // useEffect(()=>{
-  //   if(isFocused)console.log('works page')
-  // }, [isFocused])
+  const { items, fetchItems, updateItem } = useRecordsStore();
 
-
-  const {voices} = useGetVoices()
-
-  
+ useEffect(() => {
+  const fetchData = async () => {
+    await fetchItems();
+  };
+}, []);
+      
   return (
     <View style={styles.container}>
       <View style={styles.topBtns}>
@@ -42,10 +37,12 @@ const MyWork = () => {
 
       <ScrollView style={styles.worksList}>
           {/* <RecordItem /> */}
-          {voices?.map((obj: any, i) => <RecordItem key={obj.id} id={obj.id} display_name={obj.display_name} avatar_image={obj.avatar_image} />)}
+          {/* {voices?.map((obj: any, i) => <RecordItem key={obj.id} id={obj.id} display_name={obj.display_name} avatar_image={obj.avatar_image} />)} */}
+
+             {items?.map((obj: any, i: number) => <RecordItem key={i} id={obj} display_name={obj} avatar_image={''} number={i+1}/>)}
       </ScrollView>
 
-          
+
 
           {/* <View className='flex-1 flex-col justify-center items-center '>
 

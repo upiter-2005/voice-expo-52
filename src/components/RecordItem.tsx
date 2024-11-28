@@ -3,14 +3,33 @@ import React from 'react'
 import recordItem from '@/src/assets/images/User.webp'
 import cancel from '@/src/assets/images/Cencel.webp'
 import share from '@/src/assets/images/Share.webp'
+import * as FileSystem from 'expo-file-system'
+import * as Sharing from 'expo-sharing'
+import useRecordsStore from '../store/useRecordsStore'
 
 interface IRecordItem {
     id: string,
     display_name: string,
     avatar_image: string | null
+    number: number
 }
-export const RecordItem:React.FC<IRecordItem> = ({id, display_name, avatar_image}) => {
-  return (
+export const RecordItem:React.FC<IRecordItem> = ({id, display_name, avatar_image, number}) => {
+
+const { items, fetchItems, updateItem } = useRecordsStore();
+  const removeRecord = async() => {
+    let url = FileSystem.documentDirectory as string
+    url += display_name
+    const response = await FileSystem.deleteAsync(url)
+    alert(`${display_name} was successful removed`)
+    updateItem(display_name)
+  }
+
+  const shareRecord = async() => {
+    let url = FileSystem.documentDirectory as string
+    url += display_name
+    await Sharing.shareAsync(url)
+  }
+return (
     <View style={styles.recordItem}>
         {
             avatar_image ? 
@@ -20,18 +39,18 @@ export const RecordItem:React.FC<IRecordItem> = ({id, display_name, avatar_image
         }
         
         <View  style={{flex: 1}}>
-            <Text style={styles.recordItemTitle}>Record #1</Text>
+            <Text style={styles.recordItemTitle}>Record #{number}</Text>
             <Text style={{color: "#fff", fontSize: 16}}>{display_name}</Text>
         </View>
         <View style={styles.recordItemBtns}>
-            <TouchableOpacity onPress={()=>{}}>
+            <TouchableOpacity onPress={shareRecord}>
             <Image
                 source={share}
                 resizeMode='contain'
                 style={{width:37, height:37}}
             />
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>{}}>
+            <TouchableOpacity onPress={removeRecord}>
             <Image
                 source={cancel}
                 resizeMode='contain'

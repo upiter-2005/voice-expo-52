@@ -1,5 +1,5 @@
 import { View, Text, Image, ScrollView, TouchableOpacity, ImageBackground, Button, StyleSheet } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import settings from '@/src/assets/images/settings.webp'
 import vip from '@/src/assets/images/vip.webp'
@@ -11,17 +11,42 @@ import { useEvent } from 'expo'
 import { useVideoPlayer, VideoView } from 'expo-video'
 import {useGetVoices} from "@/src/hooks/useFetchVoices"
 const videoSource = require('@/src/assets/images/Preloader.mp4')
+import * as DocumentPicker from 'expo-document-picker'
+import {createVoice} from "@/src/utils/createVoice"
 
 
 const Record = () => {
+
+  const [fileName, setFileName] = useState<string>('')
+  
   const player = useVideoPlayer(videoSource, player => {
-    player.loop = true;
-    player.play();
+    player.loop = true
+    player.play()
   });
 
 
-
-
+  const importRecord = async() => {
+    const resp = await DocumentPicker.getDocumentAsync()
+    if(resp.assets){
+    
+      const result = await createVoice(resp.assets[0].name, resp.assets[0].uri)
+      console.log(resp.assets[0]) 
+      console.log(resp.assets[0].name)
+      console.log(result)
+    }
+  }
+//  const obj = {
+//   "assets": [
+//     {
+//       "mimeType": "audio/mpeg", 
+//       "name": "donald-duck-wishes-a-merry-christmas-83287.mp3",
+//       "size": 156000, 
+//       "uri": "file:///var/mobile/Containers/Data/Application/3F6C2919-E4FA-4208-A719-10ADA67C19EB/Library/Caches/ExponentExperienceData/@anonymous/voice-eb3ae61d-0ff2-4e2b-a026-228edaa56966/DocumentPicker/E5D5614E-A6CA-4345-A18D-3856737743FA.mp3"
+//     }
+//     ],
+//       "canceled": false
+//     }
+  
   const { isPlaying } = useEvent(player, 'playingChange', { isPlaying: player.playing });
   return (
     
@@ -69,7 +94,7 @@ const Record = () => {
 
             <View style={styles.btnsBox}>
 
-              <TouchableOpacity onPress={()=>{}} style={styles.btn} >
+              <TouchableOpacity onPress={importRecord} style={styles.btn} >
                 <Image
                   source={importIco}
                   resizeMode='contain'

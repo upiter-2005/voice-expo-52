@@ -1,4 +1,4 @@
-import { View, Text, TextInput, ScrollView, Image, StyleSheet, TouchableOpacity, Button, FlatList } from 'react-native'
+import { View, Text, TextInput, ScrollView, Image, StyleSheet, TouchableOpacity, Button, FlatList, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import pick from '@/src/assets/images/Pick.png'
 import {getAudio} from '@/src/utils/textToSpeach'
@@ -25,6 +25,15 @@ const AiCover = () => {
   const {voices} = useGetVoices()
     
   const generateVoice = async() => {
+    if(title.length < 3 ){
+      return Alert.alert('Incorrect title', 'Please insert more symbols in Title field')
+    }
+    if(message.length > 200){
+      return Alert.alert('Symbol limit', 'You write more then 100 symbols, please try less')
+    }
+    if(message.length === 0){
+      return Alert.alert('Text empty', 'Your message is empty')
+    }
     const audio = await getAudio(title, message, voice)
     setResultRecord(audio)
     //const { sound } = await Audio.Sound.createAsync( { uri: audio as string } )
@@ -34,12 +43,12 @@ const AiCover = () => {
 
   }
 
-  useEffect(()=>{
-    console.log('first render')
-    return () => {
-      console.log('first render')
-    }
-  }, [])
+  const cancelProcess = () => {
+    setResultRecord('')
+    setReadyRecord(false)
+    setMessage('')
+    setTitle('')
+  }
 
   const InstanceVoiceItem = ({id, avatar_image, display_name}: ItemProps) => (
     <TouchableOpacity style={[{marginVertical: 6, marginHorizontal: 10}]} onPress={()=>setVoice(id)}>
@@ -58,7 +67,7 @@ const AiCover = () => {
     <ScrollView style={styles.container}>
 
      {readyRecord && (
-      <PlayResult resultRecord={resultRecord}/>
+      <PlayResult resultRecord={resultRecord} cancelProcess={cancelProcess}/>
      )} 
 
     {!readyRecord && (

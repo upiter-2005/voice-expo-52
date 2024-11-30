@@ -1,25 +1,34 @@
-import { View, Text, TouchableOpacity,Image, StyleSheet, Button } from 'react-native'
+import { View, Text, TouchableOpacity,Image, StyleSheet, Button, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import recordItem from '@/src/assets/images/User.webp'
 import pause from '@/src/assets/images/Pause.webp'
 import play from '@/src/assets/images/Play.webp'
+
+import cancel from '@/src/assets/images/Cencel.webp'
+import done from '@/src/assets/images/Done.webp'
+
 import { useVideoPlayer, VideoView } from 'expo-video'
 import { useEvent } from 'expo'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Audio } from 'expo-av'
 import * as Sharing from 'expo-sharing'
+import * as FileSystem from 'expo-file-system'
+import useRecordsStore from '../store/useRecordsStore'
 
 const videoSource = require('@/src/assets/images/videos/Sphere.mp4')
 
 interface IPlayResult {
     resultRecord: any
+    cancelProcess: ()=> void
 }
-export const PlayResult:React.FC<IPlayResult> = ({resultRecord}) => {
-    const [isPlaing, setIsPlaing] = useState<boolean>(false);
-    const [sound, setSound] = useState<any>();
+
+export const PlayResult:React.FC<IPlayResult> = ({resultRecord, cancelProcess}) => {
+    const [isPlaing, setIsPlaing] = useState<boolean>(false)
+    const [sound, setSound] = useState<any>()
+    const { items, fetchItems, updateItem } = useRecordsStore()
     
     const player = useVideoPlayer(videoSource, player => {
-        player.loop = true;
+        player.loop = true
         player.play();
     });
 
@@ -44,15 +53,30 @@ export const PlayResult:React.FC<IPlayResult> = ({resultRecord}) => {
         Sharing.shareAsync(resultRecord)
     }
 
+    const removeRecord = async() => {
+      await FileSystem.deleteAsync(resultRecord)
+      updateItem(resultRecord)
+      cancelProcess()
+      await sound.pauseAsync()
+      Alert.alert("Cancel record")
 
-useEffect(()=>{
-    async function setRecordSound () {
-        const { sound } = await Audio.Sound.createAsync( { uri: resultRecord as string } )
-        setSound(sound)
-        sound.setStatusAsync({ isLooping: true })
     }
-    setRecordSound()
-}, [resultRecord])
+
+    const addRecord = async() => {
+      fetchItems()
+      await sound.pauseAsync()
+      Alert.alert("Add record", "The record was added to your work list")
+      cancelProcess()
+    }
+
+    useEffect(()=>{
+        async function setRecordSound () {
+            const { sound } = await Audio.Sound.createAsync( { uri: resultRecord as string } )
+            setSound(sound)
+            sound.setStatusAsync({ isLooping: true })
+        }
+        setRecordSound()
+    }, [resultRecord])
 
   return (
     <View style={{}}>
@@ -68,17 +92,41 @@ useEffect(()=>{
           }
         }}
       /> */}
-        
-        <TouchableOpacity
-          activeOpacity={0.6}
-          onPress={playRecordHandler}
-        >
-        <Image
-            source={isPlaing ? pause : play}
-            resizeMode='contain'
-            style={{width:93, height:93}}
-        />
-        </TouchableOpacity>
+        <View style={{flexDirection: 'row', gap: 14, alignItems: 'center'}}>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={removeRecord}
+          >
+            <Image
+                source={cancel}
+                resizeMode='contain'
+                style={{width:60, height:60}}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={playRecordHandler}
+          >
+            <Image
+                source={isPlaing ? pause : play}
+                resizeMode='contain'
+                style={{width:93, height:93}}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={addRecord}
+          >
+            <Image
+                source={done}
+                resizeMode='contain'
+                style={{width:60, height:60}}
+            />
+          </TouchableOpacity>
+        </View>
+       
        
       <TouchableOpacity
           activeOpacity={0.6}

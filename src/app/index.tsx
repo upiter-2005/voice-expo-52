@@ -13,9 +13,6 @@ const App = () => {
         <TouchableOpacity onPress={()=> router.push('/record')} style={styles.btnStep} >
           <Text style={styles.text}>Record</Text>
         </TouchableOpacity>
-
-      
-        
         <TouchableOpacity onPress={()=> router.push('/search/20')} style={styles.btnStep}><Text className='text-center text-white'>Pressssss</Text></TouchableOpacity>
       </ScrollView>
   );

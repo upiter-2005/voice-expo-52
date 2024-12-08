@@ -8,8 +8,8 @@ import * as Sharing from 'expo-sharing'
 import useRecordsStore from '../store/useRecordsStore'
 
 interface IRecordItem {
-    id: string,
-    display_name: string,
+    id: string
+    display_name: string
     avatar_image: string | null
     number: number
 }

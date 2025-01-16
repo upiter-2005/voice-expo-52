@@ -61,12 +61,9 @@ export default MyWork
 const styles = StyleSheet.create({
   container:{
     flex: 1,
-    height: "100%",
+    //height: "100%",
      justifyContent: 'center',
-    // alignContent: 'center',
      backgroundColor: "#000",
-    // flexDirection: 'column',
-    // paddingBottom: 80
   },
   topBtns: {
     flexDirection: 'row',

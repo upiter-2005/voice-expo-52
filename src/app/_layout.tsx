@@ -27,13 +27,13 @@ export default function RootLayout() {
 
   return (
   
-    <SafeAreaView style={styles.wrapper}>
-     
+    <SafeAreaView style={styles.wrapper} edges={['left', 'right']}>
       <Stack>
           <Stack.Screen name="index" options={{headerShown: false}} />
           <Stack.Screen name="(steps)" options={{ headerShown: false }} />
           <Stack.Screen name="search/[id]" options={{ headerShown: false }} />
           <Stack.Screen name="(record)" options={{ headerShown: false }} />
+          <Stack.Screen name="(subscribe)" options={{ headerShown: false }} />
         </Stack>
         <StatusBar style="dark" backgroundColor="#000000" />
     </SafeAreaView>

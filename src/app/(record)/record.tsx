@@ -129,7 +129,6 @@ const Record = () => {
     setRecordings([])
     console.log(recording)
     setCounter(0)
-    
   }
 
 

@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
-import { Redirect, router } from "expo-router"
+import { Link, Redirect, router } from "expo-router"
 import React from 'react';
 import {StyleSheet} from 'react-native'
 
@@ -14,6 +14,7 @@ const App = () => {
           <Text style={styles.text}>Record</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=> router.push('/search/20')} style={styles.btnStep}><Text className='text-center text-white'>Pressssss</Text></TouchableOpacity>
+        <Link href="/subscribe">Subscribe</Link>
       </ScrollView>
   );
 }

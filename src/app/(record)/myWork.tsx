@@ -5,6 +5,7 @@ import vip from '@/src/assets/images/vip.webp'
 import empty from '@/src/assets/images/Empty.webp'
 import { RecordItem } from '@/src/components/RecordItem'
 import useRecordsStore from "@/src/store/useRecordsStore"
+import { Settings } from '@/src/components/Settings'
 
 const MyWork = () => {
   const { items, fetchItems, updateItem } = useRecordsStore();
@@ -18,23 +19,7 @@ const MyWork = () => {
       
   return (
     <View style={styles.container}>
-      <View style={styles.topBtns}>
-        <TouchableOpacity onPress={()=>{}}>
-          <Image
-            source={settings}
-            resizeMode='contain'
-            style={{width:47, height:47}}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=>{}}>
-          <Image
-            source={vip}
-            resizeMode='contain'
-            style={{width:47, height:47}}
-          />
-        </TouchableOpacity>
-      </View>
-      
+      <Settings />
       <Text style={styles.workTitle}>My Work</Text>
 
       <ScrollView style={styles.worksList}>
@@ -61,6 +46,7 @@ export default MyWork
 const styles = StyleSheet.create({
   container:{
     flex: 1,
+    paddingTop: 150,
     //height: "100%",
      justifyContent: 'center',
      backgroundColor: "#000",
@@ -70,7 +56,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     paddingTop: 8,
-    height: 70
+    height: 70,
+    position: 'absolute',
+    top: 100,
+    width: '100%'
   },
   workTitle: {
     color: "#fff",

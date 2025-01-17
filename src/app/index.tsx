@@ -1,41 +1,94 @@
-import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
+import React from 'react'
+import bgImg from "@/src/assets/images/Page21.webp"
+import subscribe from "@/src/assets/images/Subscribe.webp"
+import freeForYou from "@/src/assets/images/FreeForYou.webp"
+import mainChart from "@/src/assets/images/mainChart.webp"
+
+import { View, Text, ScrollView, Image, TouchableOpacity, ImageBackground } from 'react-native'
 import { Link, Redirect, router } from "expo-router"
-import React from 'react';
-import {StyleSheet} from 'react-native'
+import {StyleSheet, Dimensions} from 'react-native'
+
+const {width, height} = Dimensions.get('window')
+
+const actualImageHeight = 273
+const actualImageWidth = 353
+
+const buttonImageHeight = 166
+const buttonImageWidth = 313
 
 const App = () => {
-
+  
   return (
-      <ScrollView style={styles.flex1}>
-        <TouchableOpacity onPress={()=> router.push('/steps')}  style={styles.btnStep}>
-          <Text style={styles.text}>Step 1</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=> router.push('/record')} style={styles.btnStep} >
-          <Text style={styles.text}>Record</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=> router.push('/search/20')} style={styles.btnStep}><Text className='text-center text-white'>Pressssss</Text></TouchableOpacity>
-        <Link href="/subscribe">Subscribe</Link>
+      
+    <ImageBackground source={bgImg} resizeMode="cover" style={styles.image}>
+
+      <ScrollView contentContainerStyle={styles.contentContainer} >
+
+          <Image 
+            source={mainChart} 
+            resizeMode="cover" 
+            style={{width: width, height: actualImageHeight * (width / actualImageWidth)}}
+          />
+          
+          <Text style={styles.title}>Use cloning voice full power</Text>
+          <View style={styles.tariffBox}>
+
+            <TouchableOpacity onPress={()=>{router.push('/subscribe')}}>
+              <Image
+                source={subscribe}
+                resizeMode='contain'
+                style={{width: 313, height: buttonImageHeight * (313 / buttonImageWidth), }}
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={()=>{router.push('/record')}}>
+              <Image
+                source={freeForYou}
+                resizeMode='contain'
+                style={{width: 313, height: buttonImageHeight * (313 / buttonImageWidth)}}
+              />
+            </TouchableOpacity>
+          
+          </View>
       </ScrollView>
-  );
+      
+    </ImageBackground>
+  ) 
 }
 
 export default App
 
 const styles = StyleSheet.create({
-  flex1 : {
-    flex: 1
+  contentContainer:{
+    width: '100%',
+    paddingTop: 100,
+    paddingBottom: 100,
+    display: 'flex', 
+    alignItems: 'center'
   },
-  btnStep: {
-    padding: 4,
-    backgroundColor: "#efefef",
-    borderRadius: 16,
-    marginBottom: 5
+  title:{
+    color: "#fff",
+    fontSize: 24,
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+    marginTop: 27,
+    marginBottom: 20
+  },
+  image: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  tariffBox:{
+    gap: 20
   },
   text: {
-    color: '#fff',
-    textAlign: 'center'
-  }
-
-})
+    color: 'white',
+    fontSize: 42,
+    lineHeight: 84,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    backgroundColor: '#000000c0',
+  },
+});
 
 

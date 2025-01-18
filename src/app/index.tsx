@@ -61,7 +61,7 @@ export default App
 const styles = StyleSheet.create({
   contentContainer:{
     width: '100%',
-    paddingTop: 100,
+    paddingTop: 30,
     paddingBottom: 100,
     display: 'flex', 
     alignItems: 'center'

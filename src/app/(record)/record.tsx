@@ -20,7 +20,9 @@ const videoSource = require('@/src/assets/images/Preloader.mp4')
 import * as DocumentPicker from 'expo-document-picker'
 import {createVoice} from "@/src/utils/createVoice"
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av'
-const HEIGHT = Dimensions.get("window").height ;
+import { Settings } from '@/src/components/Settings'
+const HEIGHT = Dimensions.get("window").height 
+
 type Recordings = {
   sound: any,
   duration: string,
@@ -40,14 +42,12 @@ const Record = () => {
     player.play()
   });
 
-
-
   useEffect(() => {
     if(counter === 59){
-      return;
+      return
     }
     if(activeCount){
-      setTimeout(() => setCounter(counter + 1), 1000);
+      setTimeout(() => setCounter(counter + 1), 1000)
     }
    
   }, [ activeCount, counter]);
@@ -71,7 +71,7 @@ const Record = () => {
   async function startRecording() {
     setCounter(0)
     try {
-      const perm = await Audio.requestPermissionsAsync();
+      const perm = await Audio.requestPermissionsAsync()
       if (perm.status === "granted") {
        
         await Audio.setAudioModeAsync({
@@ -84,8 +84,8 @@ const Record = () => {
           staysActiveInBackground: true,
         });
         setActiveCount(true)
-        const { recording } = await Audio.Recording.createAsync(Audio.RecordingOptionsPresets.HIGH_QUALITY);
-        setRecording(recording);
+        const { recording } = await Audio.Recording.createAsync(Audio.RecordingOptionsPresets.HIGH_QUALITY)
+        setRecording(recording)
       }
     } catch (err) {console.log(err)}
   }
@@ -134,25 +134,10 @@ const Record = () => {
 
   return (
     
-      <ScrollView style={{flex: 1, backgroundColor: "#000"}}>
+      <ScrollView >
         <ImageBackground source={bgimg} resizeMode="cover" style={styles.gbImg}>
 
-          <View style={styles.topBtns}>
-              <TouchableOpacity onPress={()=>{}}>
-                <Image
-                  source={settings}
-                  resizeMode='contain'
-                  style={{width:12, height:12}}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={()=>{}}>
-                <Image
-                  source={vip}
-                  resizeMode='contain'
-                  style={{width:12, height:12}}
-                />
-              </TouchableOpacity>
-          </View>
+        <Settings />
 
           <View className='items-center flex-col'>
                     

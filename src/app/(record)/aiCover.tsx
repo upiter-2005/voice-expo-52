@@ -7,6 +7,7 @@ import { useGetVoices } from '@/src/hooks/useFetchVoices'
 import recordItem from '@/src/assets/images/User.webp'
 import { LinearGradient } from 'expo-linear-gradient'
 import { PlayResult } from '@/src/components/PlayResult'
+import { Settings } from '@/src/components/Settings'
 
 type ItemProps = {
   id: string,
@@ -64,77 +65,82 @@ const AiCover = () => {
 
   return (
 
-    <ScrollView style={styles.container}>
+    <ScrollView >
+      <View style={styles.container}>
 
-     {readyRecord && (
-      <PlayResult resultRecord={resultRecord} cancelProcess={cancelProcess}/>
-     )} 
+          <Settings />
+        {readyRecord && (
+          <PlayResult resultRecord={resultRecord} cancelProcess={cancelProcess}/>
+        )} 
 
-    {!readyRecord && (
-      <>
-        <View style={{paddingBottom: 20}}>
-        <Text style={{color: '#fff', marginBottom: 4}}>Title</Text>
-        <TextInput
-          value={title}
-          onChangeText={setTitle}
-          placeholder='Click to enter text'
-          style={styles.inputBox}
-        />
-      </View>
-
-      <View className='pt-5'>
-        <Text style={{color: '#fff', marginBottom: 4}}>Add text</Text>
-        <TextInput
-          value={message}
-          onChangeText={setMessage}
-          placeholder='Click to enter text'
-          style={styles.textAreaBox}
-          multiline={true}
-          numberOfLines={7}
-        />
-      </View>
-
-      <View><Image source={pick} resizeMode="contain" style={{width: 125, height: 30, marginTop: 20}} /></View>
-
-      <View style={styles.voiceIstances}>
-        
-        {voices &&  <ScrollView horizontal={true} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} >
-          <FlatList
-              style={{display: 'flex', gap: 24, flexDirection: 'row'}}
-              data={voices}
-              renderItem={({item}: any) =>
-              <InstanceVoiceItem 
-                id={item.id}
-                avatar_image={item.avatar_image}
-                display_name={item.display_name} 
-                />
-              }
-              keyExtractor={(item: any) => item.id}
-              numColumns={Math.ceil(voices.length / 2)}
-              scrollEnabled={false}
+        {!readyRecord && (
+          <View style={{paddingHorizontal: 10}}>
+            <View style={{paddingBottom: 20}}>
+            <Text style={{color: '#fff', marginBottom: 4}}>Title</Text>
+            <TextInput
+              value={title}
+              onChangeText={setTitle}
+              placeholder='Click to enter text'
+              style={styles.inputBox}
             />
-        </ScrollView>}
+          </View>
 
-        <TouchableOpacity
-          activeOpacity={0.6}
-          onPress={generateVoice}
-        >
-          <LinearGradient
-            colors={['#00A3FF', '#CC00FF']}
-            start={{ x: 1, y: .5 }}
-            end={{ x: 0, y: .5 }}
-            style={styles.createBtn}
-          >
-            <Text style={{color: '#fff', fontSize: 24}}>Create</Text>
-          </LinearGradient>
-        </TouchableOpacity> 
+          <View className='pt-5'>
+            <Text style={{color: '#fff', marginBottom: 4}}>Add text</Text>
+            <TextInput
+              value={message}
+              onChangeText={setMessage}
+              placeholder='Click to enter text'
+              style={styles.textAreaBox}
+              multiline={true}
+              numberOfLines={7}
+            />
+          </View>
+
+          <View><Image source={pick} resizeMode="contain" style={{width: 125, height: 30, marginTop: 20}} /></View>
+
+          <View style={styles.voiceIstances}>
+            
+            {voices &&  <ScrollView horizontal={true} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} >
+              <FlatList
+                  style={{display: 'flex', gap: 24, flexDirection: 'row'}}
+                  data={voices}
+                  renderItem={({item}: any) =>
+                  <InstanceVoiceItem 
+                    id={item.id}
+                    avatar_image={item.avatar_image}
+                    display_name={item.display_name} 
+                    />
+                  }
+                  keyExtractor={(item: any) => item.id}
+                  numColumns={Math.ceil(voices.length / 2)}
+                  scrollEnabled={false}
+                />
+            </ScrollView>}
+
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={generateVoice}
+            >
+              <LinearGradient
+                colors={['#00A3FF', '#CC00FF']}
+                start={{ x: 1, y: .5 }}
+                end={{ x: 0, y: .5 }}
+                style={styles.createBtn}
+              >
+                <Text style={{color: '#fff', fontSize: 24}}>Create</Text>
+              </LinearGradient>
+            </TouchableOpacity> 
+            
+            </View>
+          </View>
+        ) }
         
-        </View>
-      </>
-    ) }
+              
+            <View style={{height:75}}></View>
+
+      </View>
      
-          
-        <View style={{height:75}}></View>
     
     </ScrollView>
   )
@@ -144,11 +150,8 @@ export default AiCover
 
 const styles = StyleSheet.create({
   container:{
-    flex: 1,
-    flexDirection: 'column',
     backgroundColor: '#000',
-    paddingHorizontal: 20,
-    paddingTop: 20,
+    paddingTop: 160,
     paddingVertical: 40
     
   },

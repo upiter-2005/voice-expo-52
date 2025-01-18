@@ -29,11 +29,9 @@ const MyWork = () => {
       :
       (
         <View style={{flex: 1, flexDirection: 'column',  alignItems: 'center',  width: "100%", }}>
-
-              <Image source={empty} resizeMode='contain' style={{width: 130, height: 130}}  />
-              <Text style={{color: '#fff', marginTop: 20}}>It’s empty</Text>
-
-          </View>
+          <Image source={empty} resizeMode='contain' style={{width: 130, height: 130}}  />
+          <Text style={{color: '#fff', marginTop: 20}}>It’s empty</Text>
+        </View>
       )}
       </ScrollView>
 
@@ -46,20 +44,9 @@ export default MyWork
 const styles = StyleSheet.create({
   container:{
     flex: 1,
-    paddingTop: 150,
-    //height: "100%",
+    paddingTop: 130,
      justifyContent: 'center',
      backgroundColor: "#000",
-  },
-  topBtns: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingTop: 8,
-    height: 70,
-    position: 'absolute',
-    top: 100,
-    width: '100%'
   },
   workTitle: {
     color: "#fff",

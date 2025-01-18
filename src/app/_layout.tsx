@@ -34,8 +34,10 @@ export default function RootLayout() {
           <Stack.Screen name="search/[id]" options={{ headerShown: false }} />
           <Stack.Screen name="(record)" options={{ headerShown: false }} />
           <Stack.Screen name="(subscribe)" options={{ headerShown: false }} />
+          <Stack.Screen name="(user-plan)" options={{ headerShown: false }} />
+          
         </Stack>
-        <StatusBar style="dark" backgroundColor="#000000" />
+        <StatusBar style="light"  />
     </SafeAreaView>
 
   );
@@ -43,6 +45,7 @@ export default function RootLayout() {
 
 const styles = StyleSheet.create({
   wrapper : {
-    flex: 1
+    flex: 1,
+    backgroundColor: "#000000"
   }
 })

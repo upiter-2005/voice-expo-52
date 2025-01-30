@@ -20,7 +20,7 @@ export default function UserPlan () {
             </TouchableOpacity>
             <Text style={[styles.title, {color: "#ffcc02"}] }>Free trial time is over</Text>
             
-            <TouchableOpacity onPress={()=>{}}>
+            <TouchableOpacity onPress={()=>{router.push('/subscribe')}}>
                 <Image
                     source={subscribe}
                     resizeMode='contain'
